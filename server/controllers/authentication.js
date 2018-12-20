@@ -3,7 +3,9 @@ const User = require('../models/user');
 const config = require('../config');
 
 function tokenForUser(user) {
-  return jwt.encode({ sub: user.id }, config.secret);
+  return jwt.encode({ sub: user.id,
+    iat: Math.round(Date.now() / 1000),
+    exp: Math.round(Date.now() / 1000 + 5 * 60 * 60)}, config.secret);
 }
 
 exports.signin = function(req, res, next) {
