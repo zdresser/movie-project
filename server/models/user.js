@@ -9,8 +9,6 @@ const UserSchema = new Schema({
   email: { type: String, unique: true, lowercase: true },
   hash: String,
   salt: String,
-
-  password: String,
   watchList: [{ type: Movie.MovieSchema }]
 });
 
