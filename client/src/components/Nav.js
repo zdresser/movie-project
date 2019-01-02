@@ -5,6 +5,8 @@ import styled from "styled-components";
 import * as actions from '../actions';
 
 const Nav = ({ authenticated, email, signout, watchListCount }) => {
+  //TODO: fetch watchList from API when this loads
+
   const handleSignOutClick = () => {
     signout();
   };

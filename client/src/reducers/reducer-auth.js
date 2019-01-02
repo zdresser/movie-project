@@ -7,10 +7,11 @@ const INITIAL_STATE = {
 };
 
 export default function(state = INITIAL_STATE, action) {
-  console.log(action);
   switch (action.type) {
     case AUTH_USER:
-      return { ...state, authenticated: action.payload.token, email: action.payload.email };
+      return { ...state, authenticated: action.payload.token,
+          email: action.payload.email
+        };
     case AUTH_ERROR:
       return { ...state, errorMessage: action.payload };
     default:

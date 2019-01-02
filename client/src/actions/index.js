@@ -29,7 +29,6 @@ export const signup = (formProps, callback) => async dispatch => {
 };
 
 export const signin = (formProps, callback) => async dispatch => {
-  console.log(formProps)
   axios.post(
     'http://localhost:5000/auth/signin',
     formProps
@@ -55,9 +54,21 @@ export const signout = () => {
 };
 
 
-export const addMovieToWatchList = (movie) => {
-  return {
-    type: ADD_MOVIE,
-    payload: movie
+export const addMovieToWatchList = (movie) => async dispatch => {
+  const config = {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
   };
+
+  axios.post(
+    'http://localhost:5000/api/watchlist',
+    movie,
+    config
+  ).then(function (response) {
+    dispatch({ type: ADD_MOVIE, payload: response.data });
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 };
