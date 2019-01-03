@@ -24,16 +24,16 @@ UserSchema.methods.validPassword = function(password) {
   return this.hash === hash;
 };
 
-UserSchema.methods.generateJWT = function() {
-  var today = new Date();
-  var exp = new Date(today);
-  exp.setDate(today.getDate() + 60);
-
-  return jwt.sign({
-    _id: this._id,
-    exp: parseInt(exp.getTime() / 1000),
-  }, 'myLittleSecret');
-};
+// UserSchema.methods.generateJWT = function() {
+//   var today = new Date();
+//   var exp = new Date(today);
+//   exp.setDate(today.getDate() + 60);
+//
+//   return jwt.sign({
+//     _id: this._id,
+//     exp: parseInt(exp.getTime() / 1000),
+//   }, 'myLittleSecret');
+// };
 
 // Create the model class
 const ModelClass = mongoose.model('user', UserSchema);

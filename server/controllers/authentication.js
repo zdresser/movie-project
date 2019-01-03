@@ -3,6 +3,8 @@ const User = require('../models/user');
 const config = require('../config');
 
 function tokenForUser(user) {
+  console.log(user);
+
   return jwt.encode({ sub: user.id,
     iat: Math.round(Date.now() / 1000),
     exp: Math.round(Date.now() / 1000 + 5 * 60 * 60)}, config.secret);
@@ -49,7 +51,7 @@ exports.signup = function(req, res, next) {
       if (err) { return next(err); }
 
       // Repond to request indicating the user was created
-      res.json({ token: user.generateJWT(), email: user.email });
+      res.json({ token: tokenForUser(user), email: user.email });
     });
   });
 }
