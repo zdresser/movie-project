@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import Movie from "./Movie";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actions from '../actions';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -62,55 +60,4 @@ const MovieGrid = styled.div`
   flex-wrap: wrap;
   padding: 2em;
   margin: 0 auto;
-`;
-
-const Pages = styled.ul`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  width: auto;
-  margin: 0 1.6em;
-
-  button.active {
-    border: 1px solid hsl(0, 0%, 13%);
-    color: hsl(0, 0%, 13%);
-    background: hsl(196, 82%, 60%);
-    border-radius: 4px;
-    padding: 0.3em;
-  }
-
-  button.page {
-    border-radius: 4px;
-    border: 1px solid hsl(196, 82%, 60%);
-    color: hsl(196, 82%, 60%);
-    background: hsl(0, 0%, 13%);
-    padding: 0.3em;
-    &:hover {
-      border: 1px solid hsl(0, 0%, 13%);
-      color: hsl(0, 0%, 13%);
-      background: hsl(196, 82%, 60%);
-      cursor: pointer;
-    }
-  }
-
-  li {
-    font-size: 0.8em;
-    list-style: none;
-    margin-right: 0.5em;
-    color: whitesmoke;
-  }
-
-  li:hover,
-  li:active {
-    color: hsl(196, 82%, 60%);
-    cursor: pointer;
-  }
-`;
-
-const Sorters = styled.div`
-  border: 1px solid red;
-  margin: 1.5em auto;
-  padding: 1em;
-  min-height: 50px;
-  min-width: 100px;
 `;

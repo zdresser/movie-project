@@ -2,8 +2,6 @@ import React, { Component, Fragment } from "react";
 import styled from "styled-components";
 import { Poster } from "./Movie";
 import Overdrive from "react-overdrive";
-import PropTypes from "prop-types";
-import { formatBudget, formatRuntime } from "../helpers";
 import * as actions from '../actions';
 import { connect } from "react-redux";
 
@@ -11,7 +9,6 @@ class MovieDetail extends Component {
   render() {
     const POSTER_PATH = "http://image.tmdb.org/t/p/w185";
     const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
-    const LOGO_PATH = "https://image.tmdb.org/t/p/w92/";
 
     const { movie } = this.props;
 
@@ -66,8 +63,7 @@ class MovieDetail extends Component {
 
 function mapStateToProps({ movies, auth }, ownProps) {
   return {
-    movie: movies[ownProps.match.params.id],
-    authenticated: auth.authenticated,
+    movie: movies[ownProps.match.params.id]
   };
 }
 
@@ -123,48 +119,6 @@ const DetailInfo = styled.div`
   }
 `;
 
-const GenreList = styled.ul`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  li {
-    list-style: none;
-    font-style: italic;
-    font-size: 0.8em;
-    font-weight: 700;
-    margin-left: 1em;
-    color: dodgerblue;
-  }
-`;
-
-const ReviewSection = styled.div`
-  padding: 2em;
-  margin: 0 auto;
-  background: black;
-  color: whitesmoke;
-  div {
-    margin-bottom: 1.5em;
-    padding-bottom: 1.5em;
-    border-bottom: 1px solid hsl(0, 100%, 59%);
-    line-height: 1.6em;
-  }
-  h1 {
-    text-align: center;
-    font-size: 2.5em;
-    margin-bottom: 1em;
-  }
-  h4 {
-    font-size: 2em;
-    font-weight: 600;
-    margin-bottom: 0.5em;
-  }
-  #review {
-    text-indent: 0.7em;
-    font-family: "Open sans", sans-serif;
-  }
-`;
-
 const Description = styled.div`
   margin: 0 auto;
   padding: 1.3em;
@@ -176,19 +130,4 @@ const Description = styled.div`
   color: whitesmoke;
   background: black;
   text-shadow: 1px 1px black;
-`;
-
-const Logos = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin: 3em auto;
-  position: absolute;
-  width: auto;
-  bottom: -39%;
-  left: 28%;
-
-  div {
-    margin-left: 0.6em;
-  }
 `;
