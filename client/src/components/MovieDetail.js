@@ -12,19 +12,6 @@ class MovieDetail extends Component {
 
     const { movie } = this.props;
 
-    const handleAddMovieClick = () => {
-      this.props.addMovieToWatchList(movie);
-    };
-
-    const renderAddMovieButton = () => {
-      if (this.props.authenticated) {
-        return (
-          <button onClick={handleAddMovieClick}>
-          Add Movie to Watch List</button>
-        )
-      }
-    };
-
     return (
       <Fragment>
         <BackdropContainer
@@ -46,7 +33,6 @@ class MovieDetail extends Component {
                 {movie.vote_average}
                 /10
               </p>
-              {renderAddMovieButton()}
             </div>
 
           </div>
