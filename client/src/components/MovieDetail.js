@@ -47,7 +47,7 @@ class MovieDetail extends Component {
   }
 }
 
-function mapStateToProps({ movies, auth }, ownProps) {
+function mapStateToProps({ movies }, ownProps) {
   return {
     movie: movies[ownProps.match.params.id]
   };
