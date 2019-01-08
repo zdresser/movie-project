@@ -23,9 +23,9 @@ render(
         <App>
           <Switch>
             <Route exact path="/" component={MovieList} />
-            <Route exact path="/:id" component={MovieDetail} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/signin" component={Signin} />
+            <Route exact path="/:id" component={MovieDetail} />
           </Switch>
         </App>
       </Fragment>
