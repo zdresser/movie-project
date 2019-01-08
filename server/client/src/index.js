@@ -10,6 +10,8 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers/index";
 import MovieList from './components/MovieList'
 import MovieDetail from './components/MovieDetail'
+import Signup from './components/auth/Signup';
+import Signin from './components/auth/Signin';
 
 const store = createStore(rootReducer, {}, applyMiddleware(thunk));
 
