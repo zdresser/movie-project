@@ -20,5 +20,5 @@ export default withRouter(connect(
 )(App));
 
 const AppContainer = styled.div`
-  padding-top: 90px;
+  padding-top: 120px;
 `;

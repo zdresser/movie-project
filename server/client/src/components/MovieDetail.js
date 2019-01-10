@@ -11,6 +11,19 @@ class MovieDetail extends Component {
     const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
 
     const { movie } = this.props;
+    
+    const handleAddMovieClick = () => {
+      this.props.addMovieToWatchList(movie);
+    };
+    
+    const renderAddMovieButton = () => {
+       if (this.props.authenticated) {
+         return (
+           <button onClick={handleAddMovieClick}>
+           Add Movie to Watch List</button>
+         )
+       }
+     };
 
     return (
       <Fragment>
@@ -33,6 +46,7 @@ class MovieDetail extends Component {
                 {movie.vote_average}
                 /10
               </p>
+              {renderAddMovieButton()}
             </div>
 
           </div>
@@ -47,16 +61,17 @@ class MovieDetail extends Component {
   }
 }
 
-function mapStateToProps({ movies }, ownProps) {
+function mapStateToProps({ movies, auth }, ownProps) {
   return {
-    movie: movies[ownProps.match.params.id]
-  };
+    movie: movies[ownProps.match.params.id],
+    authenticated: auth.authenticated,
+  }
 }
 
 export default connect(
   mapStateToProps,
   actions
-)(MovieDetail);
+)(MovieDetail)
 
 const BackdropContainer = styled.div`
   position: relative;
