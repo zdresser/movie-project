@@ -1,6 +1,5 @@
 import { ADD_MOVIE,  UPDATE_WATCH_LIST } from '../actions/types';
 import { normalize, schema } from 'normalizr';
-import _ from 'lodash'
 
 export default function(state = [], action) {
   switch (action.type) {

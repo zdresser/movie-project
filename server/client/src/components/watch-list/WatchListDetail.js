@@ -1,15 +1,10 @@
-import React, { Component, Fragment } from "react";
-import styled from "styled-components";
-import { Poster } from "../Movie";
+import React, { Component } from "react";
 import MovieDetails from "../MovieDetails";
-import Overdrive from "react-overdrive";
 import * as actions from '../../actions';
 import { connect } from "react-redux";
 
 class WatchListDetail extends Component {
   render() {
-    const { movie } = this.props;
-    
     return (
       <MovieDetails
         type={'watchList'}
