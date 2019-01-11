@@ -9,7 +9,9 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers/index";
 import MovieList from './components/MovieList'
+import WatchList from './components/WatchList'
 import MovieDetail from './components/MovieDetail'
+import WatchListDetail from './components/WatchListDetail'
 import Signup from './components/auth/Signup';
 import Signin from './components/auth/Signin';
 
@@ -25,6 +27,8 @@ render(
             <Route exact path="/" component={MovieList} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/signin" component={Signin} />
+            <Route exact path="/watch-list" component={WatchList} />
+            <Route exact path="/watch-list/:id" component={WatchListDetail} />
             <Route exact path="/:id" component={MovieDetail} />
           </Switch>
         </App>

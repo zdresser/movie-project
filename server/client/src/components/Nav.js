@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styled from "styled-components";
 import * as actions from '../actions';
 
-const Nav = ({ authenticated, email, signout }) => {
+const Nav = ({ authenticated, email, signout, watchListCount }) => {
   const handleSignOutClick = () => {
     signout();
   };
@@ -14,6 +14,7 @@ const Nav = ({ authenticated, email, signout }) => {
       return (
         <React.Fragment>
           <li>{email}</li>
+          <li><Link to="/watch-list">My Watch List: {watchListCount}</Link></li>
           <li><a href="#" onClick={handleSignOutClick}>Sign Out</a></li>
         </React.Fragment>
       );
@@ -27,7 +28,6 @@ const Nav = ({ authenticated, email, signout }) => {
     }
   }
 
-
   return (
     <NavContainer>
       <div id="logo">
@@ -38,7 +38,6 @@ const Nav = ({ authenticated, email, signout }) => {
 
   
       <NavUl>
-
         {renderLinks()}
       </NavUl>
     </NavContainer>
@@ -46,9 +45,11 @@ const Nav = ({ authenticated, email, signout }) => {
 };
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
     authenticated: state.auth.authenticated,
-    email: state.auth.email
+    email: state.auth.email,
+    watchListCount: state.watch_list.length
   };
 }
 

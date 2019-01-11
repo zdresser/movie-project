@@ -6,29 +6,29 @@ import Overdrive from "react-overdrive";
 import * as actions from '../actions';
 import { connect } from "react-redux";
 
-class MovieDetail extends Component {
+class WatchListDetail extends Component {
   render() {
     const { movie } = this.props;
     
     return (
-      <MovieDetailInner 
-        type={'movie'}
-        movie={this.props.movie} 
-        authenticated={this.props.authenticated} 
+      <MovieDetailInner
+        type={'watchList'}
+        movie={this.props.movie}
+        authenticated={this.props.authenticated}
         addMovieToWatchList={this.props.addMovieToWatchList}
       />
     );
   }
 }
 
-function mapStateToProps({ movies, auth }, ownProps) {
+function mapStateToProps(state, ownProps) {  
   return {
-    movie: movies[ownProps.match.params.id],
-    authenticated: auth.authenticated,
+    movie: state.watch_list[0],
+    authenticated: state.auth.authenticated,
   }
 }
 
 export default connect(
   mapStateToProps,
   actions
-)(MovieDetail)
+)(WatchListDetail)
