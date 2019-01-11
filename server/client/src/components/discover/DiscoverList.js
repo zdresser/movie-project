@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Movie from "./Movie";
+import Movie from "../Movie";
 import { connect } from "react-redux";
-import * as actions from '../actions';
+import * as actions from '../../actions';
 import _ from "lodash";
 import InfiniteScroll from 'react-infinite-scroller';
 
-class MovieList extends Component {  
+class DiscoverList extends Component {  
   constructor () {
     super()
     
@@ -54,7 +54,7 @@ function mapStateToProps (state) {
 export default connect(
   mapStateToProps,
   actions
-)(MovieList);
+)(DiscoverList);
 
 const MovieGrid = styled.div`
   display: flex;

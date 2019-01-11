@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components";
-import { Poster } from "./Movie";
-import MovieDetailInner from "./MovieDetailInner";
+import { Poster } from "../Movie";
+import MovieDetails from "../MovieDetails";
 import Overdrive from "react-overdrive";
-import * as actions from '../actions';
+import * as actions from '../../actions';
 import { connect } from "react-redux";
 
 class WatchListDetail extends Component {
@@ -11,7 +11,7 @@ class WatchListDetail extends Component {
     const { movie } = this.props;
     
     return (
-      <MovieDetailInner
+      <MovieDetails
         type={'watchList'}
         movie={this.props.movie}
         authenticated={this.props.authenticated}
@@ -22,8 +22,10 @@ class WatchListDetail extends Component {
 }
 
 function mapStateToProps(state, ownProps) {  
+  console.log(state)
+  
   return {
-    movie: state.watch_list[0],
+    movie: state.watch_list[ownProps.match.params.id],
     authenticated: state.auth.authenticated,
   }
 }

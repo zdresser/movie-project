@@ -4,7 +4,7 @@ import { Poster } from "./Movie";
 import Overdrive from "react-overdrive";
 import { connect } from "react-redux";
 
-const MovieDetailInner = ({ movie, authenticated, addMovieToWatchList, type }) => {
+const MovieDetails = ({ movie, authenticated, addMovieToWatchList, type }) => {
   const POSTER_PATH = "http://image.tmdb.org/t/p/w185";
   const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
 
@@ -55,7 +55,7 @@ const MovieDetailInner = ({ movie, authenticated, addMovieToWatchList, type }) =
   )
 };
 
-export default MovieDetailInner;
+export default MovieDetails;
 
 const BackdropContainer = styled.div`
   position: relative;

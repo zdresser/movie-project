@@ -1,17 +1,17 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components";
-import { Poster } from "./Movie";
-import MovieDetailInner from "./MovieDetailInner";
+import { Poster } from "../Movie";
+import MovieDetails from "../MovieDetails";
 import Overdrive from "react-overdrive";
-import * as actions from '../actions';
+import * as actions from '../../actions';
 import { connect } from "react-redux";
 
-class MovieDetail extends Component {
+class DiscoverDetail extends Component {
   render() {
     const { movie } = this.props;
     
     return (
-      <MovieDetailInner 
+      <MovieDetails 
         type={'movie'}
         movie={this.props.movie} 
         authenticated={this.props.authenticated} 
@@ -31,4 +31,4 @@ function mapStateToProps({ movies, auth }, ownProps) {
 export default connect(
   mapStateToProps,
   actions
-)(MovieDetail)
+)(DiscoverDetail)

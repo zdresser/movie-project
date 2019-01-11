@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Movie from "./Movie";
+import Movie from "../Movie";
 import { connect } from "react-redux";
-import * as actions from '../actions';
+import * as actions from '../../actions';
 import _ from "lodash";
 
-class MovieList extends Component {
+class DiscoverList extends Component {
   render () {
     const movies = _.map(this.props.movies, (m) => {
-      debugger;
       return <Movie path={'watch-list/'} id={m.id} key={m.id} title={m.title} img={m.poster_path} />
     });
 
@@ -28,7 +27,7 @@ function mapStateToProps (state) {
 export default connect(
   mapStateToProps,
   actions
-)(MovieList);
+)(DiscoverList);
 
 const MovieGrid = styled.div`
   display: flex;

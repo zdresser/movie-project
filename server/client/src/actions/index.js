@@ -61,11 +61,13 @@ export const signin = (formProps, callback) => dispatch => {
   });
 };
 
-export const signout = () => dispatch => {
+export const signout = (callback) => dispatch => {
   localStorage.removeItem('token');
 
   dispatch({ type: AUTH_USER, payload: '' });
   dispatch({ type: UPDATE_WATCH_LIST, payload: '' });
+
+  callback()
 };
 
 export const addMovieToWatchList = (movie) => dispatch => {
@@ -80,7 +82,6 @@ export const addMovieToWatchList = (movie) => dispatch => {
     { movie },
     config
   ).then(function (response) {
-    console.log(response)
     dispatch({ type: ADD_MOVIE, payload: response.data });
   })
   .catch(function (error) {
