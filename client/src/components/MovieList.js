@@ -17,10 +17,6 @@ class MovieList extends Component {
     }
   }
 
-  componentDidMount () {
-    this.props.fetchMovies()
-  }
-
   loadItems (page) {
     if (page < this.props.totalPages || this.props.totalPages === 0) {
       this.props.fetchMovies(page)
@@ -30,9 +26,13 @@ class MovieList extends Component {
   }
 
   render() {
-    const movies = _.map(this.props.movies, (m) => {
-      return <Movie id={m.id} key={m.id} title={m.title} img={m.poster_path} />
+    const movies = this.props.order.map((id) => {
+      const movie = this.props.movies[id];
+
+      return <Movie id={movie.id} key={id} title={movie.title} img={movie.poster_path} />
     });
+
+    
 
     return (
       <InfiniteScroll
@@ -48,7 +48,11 @@ class MovieList extends Component {
 }
 
 function mapStateToProps (state) {
-  return { movies: state.movies, totalPages: state.total_pages }
+  return { 
+    movies: state.movies, 
+    order: state.movies_order, 
+    totalPages: state.total_pages
+  }
 };
 
 export default connect(
