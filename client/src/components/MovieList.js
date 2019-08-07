@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Movie from "./Movie";
 import { connect } from "react-redux";
 import * as actions from '../actions';
-import _ from "lodash";
 import InfiniteScroll from 'react-infinite-scroller';
 
 class MovieList extends Component {  

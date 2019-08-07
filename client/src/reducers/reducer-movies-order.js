@@ -1,10 +1,10 @@
-import { FETCH_MOVIES_ORDER } from '../actions/types';
+import { FETCH_MOVIES } from '../actions/types';
 
 import { normalize, schema } from 'normalizr';
 
 export default function(state = [], action) {
   switch (action.type) {
-    case FETCH_MOVIES_ORDER:
+    case FETCH_MOVIES:
       const movieSchema = new schema.Entity('movies');
 
       const movieListSchema = new schema.Array(movieSchema);
