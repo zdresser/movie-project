@@ -2,17 +2,16 @@ import { FETCH_MOVIES } from '../actions/types';
 
 import { normalize, schema } from 'normalizr';
 
-export default function(state = {}, action) {
+export default function(state = [], action) {
   switch (action.type) {
     case FETCH_MOVIES:
-    
       const movieSchema = new schema.Entity('movies');
 
       const movieListSchema = new schema.Array(movieSchema);
 
-      const normalizedMovies = normalize(action.payload.results, movieListSchema).entities.movies;
-      
-      return {...normalizedMovies, ...state};
+      const normalizedOrder = normalize(action.payload.results, movieListSchema).result
+
+      return [...state, ...normalizedOrder];
     default:
       return state;
   }
