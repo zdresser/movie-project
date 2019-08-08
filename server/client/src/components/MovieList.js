@@ -17,10 +17,6 @@ class MovieList extends Component {
     }
   }
 
-  componentDidMount () {
-    this.props.fetchMovies()
-  }
-
   loadItems (page) {
     if (page < this.props.totalPages || this.props.totalPages === 0) {
       this.props.fetchMovies(page)
