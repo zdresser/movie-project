@@ -8,12 +8,12 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers/index";
-import DiscoverList from './components/discover/DiscoverList'
-import DiscoverDetail from './components/discover/DiscoverDetail'
-import WatchList from './components/watch-list/WatchList'
-import WatchListDetail from './components/watch-list/WatchListDetail'
+import DiscoverList from './components/DiscoverList'
+import GenericDetailWrapper from './components/GenericDetailWrapper'
+import WatchList from './components/WatchList'
 import Signup from './components/auth/Signup';
 import Signin from './components/auth/Signin';
+import MovieDetailWithType from './components/MovieDetailWithType';
 
 const store = createStore(rootReducer, {}, applyMiddleware(thunk));
 
@@ -30,9 +30,14 @@ render(
             <Route exact path="/signin" component={Signin} />
             
             <Route exact path="/watch-list" component={WatchList} />
-            <Route exact path="/watch-list/:id" component={WatchListDetail} />
+
+            <Route exact path="/watch-list/:id" component={
+              MovieDetailWithType('watchList')(GenericDetailWrapper)
+            } />
             
-            <Route exact path="/:id" component={DiscoverDetail} />
+            <Route exact path="/:id" component={
+              MovieDetailWithType('movie')(GenericDetailWrapper)
+            } />
           </Switch>
         </App>
       </Fragment>

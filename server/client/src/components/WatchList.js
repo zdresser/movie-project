@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Movie from "../Movie";
+import Movie from "./Movie";
 import { connect } from "react-redux";
-import * as actions from '../../actions';
+import * as actions from '../actions';
 import _ from "lodash";
 
 class DiscoverList extends Component {
@@ -20,8 +20,7 @@ class DiscoverList extends Component {
 }
 
 function mapStateToProps (state) {
-  console.log(state)
-  return { movies: state.watch_list }
+  return { movies: state.watch_list.items }
 };
 
 export default connect(

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Movie from "../Movie";
+import Movie from "./Movie";
 import { connect } from "react-redux";
-import * as actions from '../../actions';
+import * as actions from '../actions';
 import _ from "lodash";
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -30,8 +30,10 @@ class DiscoverList extends Component {
   }
 
   render() {
-    const movies = _.map(this.props.movies, (m) => {
-      return <Movie path={''} id={m.id} key={m.id} title={m.title} img={m.poster_path} />
+    const movies = this.props.order.map((id) => {
+      const movie = this.props.movies[id];
+
+      return <Movie id={movie.id} path={''} key={id} title={movie.title} img={movie.poster_path} />
     });
 
     return (
@@ -48,7 +50,11 @@ class DiscoverList extends Component {
 }
 
 function mapStateToProps (state) {
-  return { movies: state.movies, totalPages: state.total_pages }
+  return { 
+    movies: state.movies.items,
+    order: state.movies.order,
+    totalPages: state.total_pages 
+  }
 };
 
 export default connect(

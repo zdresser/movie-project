@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Poster } from "./Movie";
 import Overdrive from "react-overdrive";
 
-const MovieDetails = ({ movie, authenticated, addMovieToWatchList, type }) => {
+const MovieDetails = ({ movie, authenticated, addMovieToWatchList, type, watch_list_ids }) => {
   const POSTER_PATH = "http://image.tmdb.org/t/p/w185";
   const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
 
@@ -17,7 +17,10 @@ const MovieDetails = ({ movie, authenticated, addMovieToWatchList, type }) => {
   };
 
   const handleAddMovieClick = () => {
-    addMovieToWatchList(movie);
+    // if the movie isn't already in the "watch list"
+    if (!watch_list_ids.includes(String(movie.id))) {
+      addMovieToWatchList(movie);
+    }
   };
 
   return (

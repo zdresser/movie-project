@@ -51,7 +51,7 @@ function mapStateToProps(state) {
   return {
     authenticated: state.auth.authenticated,
     email: state.auth.email,
-    watchListCount: state.watch_list_count
+    watchListCount: state.watch_list.watch_list_count
   };
 }
 
