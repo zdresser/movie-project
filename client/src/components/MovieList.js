@@ -1,36 +1,30 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Movie from "./Movie";
-import { connect } from "react-redux";
-import * as actions from '../actions';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from '../actions';
 import _ from "lodash";
 
-class MovieList extends Component {  
-  componentDidMount () {
-    this.props.fetchMovies()
-  }
+const MovieList = () => {
+  const movies = useSelector(state => state.movies);
+  const dispatch = useDispatch();
 
-  render() {
-    const movies = _.map(this.props.movies, (m) => {
-      return <Movie id={m.id} key={m.id} title={m.title} img={m.poster_path} />
-    });
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
 
-    return (
-      <MovieGrid>
-        {movies}
-      </MovieGrid>
-    );
-  }
-}
+  const movieComponents = _.map(movies, (m) => {
+    return <Movie id={m.id} key={m.id} title={m.title} img={m.poster_path} />
+  });
 
-function mapStateToProps (state) {
-  return { movies: state.movies, totalPages: state.total_pages }
+  return (
+    <MovieGrid>
+      {movieComponents}
+    </MovieGrid>
+  )
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(MovieList);
+export default MovieList;
 
 const MovieGrid = styled.div`
   display: flex;

@@ -1,62 +1,49 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import { Poster } from "./Movie";
 import Overdrive from "react-overdrive";
-import * as actions from '../actions';
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-class MovieDetail extends Component {
-  render() {
-    const POSTER_PATH = "http://image.tmdb.org/t/p/w185";
-    const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
+const MovieDetail = (props) => {
+  const movie = useSelector(state => state.movies[props.match.params.id]);
 
-    const { movie } = this.props;
+  const POSTER_PATH = "http://image.tmdb.org/t/p/w185";
+  const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
 
-    return (
-      <Fragment>
-        <BackdropContainer
-          backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}
-        />
-        <DetailInfo>
-          <Overdrive id={String(movie.id)}>
-            <Poster
-              src={`${POSTER_PATH}${movie.poster_path}`}
-              alt="poster"
-              style={{ boxShadow: "0 5px 30px black" }}
-            />
-          </Overdrive>
-          <div id="info">
-            <h1>{movie.title}</h1>
-            <div id="infoAttr">
-              <p className="first">{movie.release_date}</p>
-              <p>
-                {movie.vote_average}
-                /10
-              </p>
-            </div>
-
+  return (
+    <Fragment>
+      <BackdropContainer
+        backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}
+      />
+      <DetailInfo>
+        <Overdrive id={String(movie.id)}>
+          <Poster
+            src={`${POSTER_PATH}${movie.poster_path}`}
+            alt="poster"
+            style={{ boxShadow: "0 5px 30px black" }}
+          />
+        </Overdrive>
+        <div id="info">
+          <h1>{movie.title}</h1>
+          <div id="infoAttr">
+            <p className="first">{movie.release_date}</p>
+            <p>
+              {movie.vote_average}
+              /10
+            </p>
           </div>
-        </DetailInfo>
 
+        </div>
+      </DetailInfo>
 
-        <Description>
-          <p>{movie.overview}</p>
-        </Description>
-      </Fragment>
-    );
-  }
+      <Description>
+        <p>{movie.overview}</p>
+      </Description>
+    </Fragment>
+  )
 }
 
-function mapStateToProps({ movies }, ownProps) {
-  return {
-    movie: movies[ownProps.match.params.id]
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  actions
-)(MovieDetail);
+export default MovieDetail;
 
 const BackdropContainer = styled.div`
   position: relative;
@@ -73,7 +60,6 @@ const DetailInfo = styled.div`
   text-align: left;
   padding: 1.5em 1em 0 1em;
   display: flex;
-  /* align-items: center; */
   font-size: 1.2em;
   div#info {
     margin-left: 20px;
@@ -110,9 +96,6 @@ const Description = styled.div`
   padding: 1.3em;
   text-align: left;
   width: 100%;
-  /* position: absolute;
-  left: -2%;
-  top: 30%; */
   color: whitesmoke;
   background: black;
   text-shadow: 1px 1px black;
