@@ -8,8 +8,10 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers/index";
-import MovieList from './components/MovieList'
-import MovieDetail from './components/MovieDetail'
+import MovieList from './components/MovieList';
+import MovieDetail from './components/MovieDetail';
+import Signup from './components/auth/Signup';
+import Signin from './components/auth/Signin';
 
 const store = createStore(rootReducer, {}, applyMiddleware(thunk));
 
@@ -21,6 +23,8 @@ render(
         <App>
           <Switch>
             <Route exact path="/" component={MovieList} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/signin" component={Signin} />
             <Route exact path="/:id" component={MovieDetail} />
           </Switch>
         </App>
