@@ -1,46 +1,57 @@
-import React, { Fragment } from "react";
+import React, { useEffect, Fragment } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from 'react-redux';
 import { Poster } from "./Movie";
 import Overdrive from "react-overdrive";
-import { useSelector } from "react-redux";
+import { fetchMovie } from '../actions';
+import { useParams } from "react-router-dom";
 
-const MovieDetail = (props) => {
-  const movie = useSelector(state => state.movies[props.match.params.id]);
+const MovieDetail = () => {
+  const { id } = useParams();
+  const movie = useSelector(state => state.movies.entries[id]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMovie(id));
+  }, [dispatch, id]);
 
   const POSTER_PATH = "http://image.tmdb.org/t/p/w185";
   const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
 
-  return (
-    <Fragment>
-      <BackdropContainer
-        backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}
-      />
-      <DetailInfo>
-        <Overdrive id={String(movie.id)}>
-          <Poster
-            src={`${POSTER_PATH}${movie.poster_path}`}
-            alt="poster"
-            style={{ boxShadow: "0 5px 30px black" }}
-          />
-        </Overdrive>
-        <div id="info">
-          <h1>{movie.title}</h1>
-          <div id="infoAttr">
-            <p className="first">{movie.release_date}</p>
-            <p>
-              {movie.vote_average}
-              /10
-            </p>
+  if (movie) {
+    return (
+      <Fragment>
+        <BackdropContainer
+          backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}
+        />
+        <DetailInfo>
+          <Overdrive id={String(movie.id)}>
+            <Poster
+              src={`${POSTER_PATH}${movie.poster_path}`}
+              alt="poster"
+              style={{ boxShadow: "0 5px 30px black" }}
+            />
+          </Overdrive>
+          <div id="info">
+            <h1>{movie.title}</h1>
+            <div id="infoAttr">
+              <p className="first">{movie.release_date}</p>
+              <p>
+                {movie.vote_average}
+                /10
+              </p>
+            </div>
           </div>
-
-        </div>
-      </DetailInfo>
-
-      <Description>
-        <p>{movie.overview}</p>
-      </Description>
-    </Fragment>
-  )
+        </DetailInfo>
+  
+        <Description>
+          <p>{movie.overview}</p>
+        </Description>
+      </Fragment>
+    )
+  } else {
+    return <h1>Loading...</h1>
+  }
 }
 
 export default MovieDetail;
@@ -80,7 +91,6 @@ const DetailInfo = styled.div`
     display: inline-block;
     margin-left: 1.5em;
   }
-
   div#infoAttr > p:hover {
     color: hsl(0, 100%, 72%);
     cursor: pointer;
