@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
+import { fetchUser } from '../actions';
 
 const App = (props) => {
+  const dispatch = useDispatch();
+  const authenticated = useSelector(state => state.auth.authenticated);
+
+  useEffect(() => {
+    if (authenticated) {
+      dispatch(fetchUser());
+    } 
+  }, [authenticated, dispatch]);
+
   return (
     <AppContainer>
       {props.children}
