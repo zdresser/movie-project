@@ -8,7 +8,10 @@ const cors = require('cors');
 const keys = require('./config/keys');
 
 // DB Setup
-mongoose.connect(keys.MONGODB_URI);
+mongoose.connect(keys.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.use(cors());
 
