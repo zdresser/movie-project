@@ -2,6 +2,7 @@ import "./App.css";
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { render } from "react-dom";
+import Nav from "./components/Nav";
 import App from './components/App';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
@@ -15,6 +16,7 @@ const store = createStore(rootReducer, {}, applyMiddleware(thunk));
 render(
   <Provider store={store}>
     <Router>
+      <Nav />
       <App>
         <Switch>
           <Route exact path="/" component={MovieList} />
