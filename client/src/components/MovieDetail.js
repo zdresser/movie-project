@@ -1,17 +1,24 @@
-import React, { Component, Fragment } from "react";
+import React, { useEffect, Fragment } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from 'react-redux';
 import { Poster } from "./Movie";
 import Overdrive from "react-overdrive";
-import * as actions from '../actions';
-import { connect } from "react-redux";
+import { fetchMovie } from '../actions';
+import { useParams } from "react-router-dom";
 
-class MovieDetail extends Component {
-  render() {
-    const POSTER_PATH = "http://image.tmdb.org/t/p/w185";
-    const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
+const MovieDetail = () => {
+  const { id } = useParams();
+  const movie = useSelector(state => state.movies.entries[id]);
+  const dispatch = useDispatch();
 
-    const { movie } = this.props;
+  useEffect(() => {
+    dispatch(fetchMovie(id));
+  }, [dispatch, id]);
 
+  const POSTER_PATH = "http://image.tmdb.org/t/p/w185";
+  const BACKDROP_PATH = "http://image.tmdb.org/t/p/w1280";
+
+  if (movie) {
     return (
       <Fragment>
         <BackdropContainer
@@ -34,29 +41,20 @@ class MovieDetail extends Component {
                 /10
               </p>
             </div>
-
           </div>
         </DetailInfo>
-
-
+  
         <Description>
           <p>{movie.overview}</p>
         </Description>
       </Fragment>
-    );
+    )
+  } else {
+    return <h1>Loading...</h1>
   }
 }
 
-function mapStateToProps({ movies }, ownProps) {
-  return {
-    movie: movies[ownProps.match.params.id]
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  actions
-)(MovieDetail);
+export default MovieDetail;
 
 const BackdropContainer = styled.div`
   position: relative;
@@ -73,7 +71,6 @@ const DetailInfo = styled.div`
   text-align: left;
   padding: 1.5em 1em 0 1em;
   display: flex;
-  /* align-items: center; */
   font-size: 1.2em;
   div#info {
     margin-left: 20px;
@@ -94,7 +91,6 @@ const DetailInfo = styled.div`
     display: inline-block;
     margin-left: 1.5em;
   }
-
   div#infoAttr > p:hover {
     color: hsl(0, 100%, 72%);
     cursor: pointer;
@@ -110,9 +106,6 @@ const Description = styled.div`
   padding: 1.3em;
   text-align: left;
   width: 100%;
-  /* position: absolute;
-  left: -2%;
-  top: 30%; */
   color: whitesmoke;
   background: black;
   text-shadow: 1px 1px black;

@@ -1,63 +1,44 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Movie from "./Movie";
-import { connect } from "react-redux";
-import * as actions from '../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMovies } from '../actions';
 import InfiniteScroll from 'react-infinite-scroller';
 
-class MovieList extends Component {  
-  constructor () {
-    super()
-    
-    this.loadItems = this.loadItems.bind(this)
-    
-    this.state = {
-      hasMoreItems: true
-    }
-  }
+const MovieList = () => {
+  const [hasMoreItems, setHasMoreItems] = useState(true);
+  const movieOrder = useSelector(state => state.movies.order);
+  const movies = useSelector(state => state.movies.entries);
+  const totalPages = useSelector(state => state.total_pages);
+  const dispatch = useDispatch();
 
-  loadItems (page) {
-    if (page < this.props.totalPages || this.props.totalPages === 0) {
-      this.props.fetchMovies(page)
+  const loadItems = (page) => {
+    if (page < totalPages || totalPages === 0) {
+      dispatch(fetchMovies(page))
     } else {
-      this.setState({ hasMoreItems: false })
+      setHasMoreItems(false);
     }
-  }
+  };
 
-  render() {
-    const movies = this.props.order.map((id) => {
-      const movie = this.props.movies[id];
+  const movieComponents = movieOrder.map((id) => {
+    const movie = movies[id];
 
-      return <Movie id={movie.id} key={id} title={movie.title} img={movie.poster_path} />
-    });
+    return <Movie id={movie.id} key={id} title={movie.title} img={movie.poster_path} />
+  });
 
-    
-
-    return (
-      <InfiniteScroll
-        loadMore={this.loadItems}
-        pageStart={0}
-        hasMore={this.state.hasMoreItems}>
-        <MovieGrid>
-          {movies}
-        </MovieGrid>
-      </InfiniteScroll>
-    );
-  }
+  return (
+    <InfiniteScroll
+      loadMore={loadItems}
+      pageStart={0}
+      hasMore={hasMoreItems}>
+      <MovieGrid>
+        {movieComponents}
+      </MovieGrid>
+    </InfiniteScroll>
+  )
 }
 
-function mapStateToProps (state) {
-  return { 
-    movies: state.movies, 
-    order: state.movies_order, 
-    totalPages: state.total_pages
-  }
-};
-
-export default connect(
-  mapStateToProps,
-  actions
-)(MovieList);
+export default MovieList;
 
 const MovieGrid = styled.div`
   display: flex;
