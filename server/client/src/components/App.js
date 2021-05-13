@@ -11,7 +11,7 @@ const App = (props) => {
     if (authenticated) {
       dispatch(fetchUser());
     } 
-  }, [authenticated, dispatch]);
+  }, [authenticated]);
 
   return (
     <AppContainer>

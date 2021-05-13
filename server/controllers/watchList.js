@@ -9,8 +9,20 @@ exports.addMovieToList = function(req, res) {
       user.watchList.push(movie);
 
       user.save(function (err, user) {
-        res.send(movie);
+        res.send({
+          movie,
+          watchListCount: user.watchList.length
+        });
       });
+    });
+  });
+};
+
+exports.getWatchList = function(req, res) {
+  User.findOne({_id: req.user._id}, function (err, user) {
+    res.send({
+      movies: user.watchList,
+      watchListCount: user.watchList.length
     });
   });
 };
