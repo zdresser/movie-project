@@ -23,7 +23,7 @@ export const fetchMovie = (id) => dispatch => {
 
 export const signup = (formProps, callback) => dispatch => {
   axios.post(
-    'http://localhost:5000/auth/signup',
+    '/auth/signup',
     formProps
   ).then(function (response) {
     dispatch({ type: AUTH_USER, payload: response.data });
