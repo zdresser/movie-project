@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Movie from "./Movie";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMovies } from '../actions';
+import InfiniteScroll from "react-infinite-scroller";
 
 const MovieList = () => {
   const movieOrder = useSelector(state => state.movies.order);
@@ -13,6 +14,10 @@ const MovieList = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
+  const loadItems = (page) => {
+    dispatch(fetchMovies(page));
+  };
+
   const movieComponents = movieOrder.map((id) => {
     const movie = movies[id];
 
@@ -20,9 +25,11 @@ const MovieList = () => {
   });
 
   return (
-    <MovieGrid>
-      {movieComponents}
-    </MovieGrid>
+    <InfiniteScroll loadMore={loadItems} hasMore={true}>
+      <MovieGrid>
+        {movieComponents}
+      </MovieGrid>
+    </InfiniteScroll>   
   )
 }
 

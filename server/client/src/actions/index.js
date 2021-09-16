@@ -1,22 +1,52 @@
-import axios from "axios";
-import { FETCH_MOVIES, FETCH_MOVIE } from './types';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Movie from "./Movie";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from "../actions";
+import InfiniteScroll from "react-infinite-scroller";
 
-export const fetchMovies = (page = 1) => dispatch => {
-  axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=a50dd974dc6bceb5358b37229983facc&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`
-  ).then(function (response) {
-    dispatch({ type: FETCH_MOVIES, payload: response.data });
-  })
-  .catch(function (error) {
-    console.log(error);
+const MovieList = () => {
+  const [hasMoreItems, setHasMoreItems] = useState(true);
+  const movieOrder = useSelector((state) => state.movies.order);
+  const movies = useSelector((state) => state.movies.entries);
+  const totalPages = useSelector((state) => state.total_pages);
+  const dispatch = useDispatch();
+
+  const loadItems = (page) => {
+    if (page < totalPages || totalPages === 0) {
+      dispatch(fetchMovies(page));
+    } else {
+      setHasMoreItems(false);
+    }
+  };
+
+  const movieComponents = movieOrder.map((id) => {
+    const movie = movies[id];
+
+    return (
+      <Movie
+        id={movie.id}
+        key={id}
+        title={movie.title}
+        img={movie.poster_path}
+      />
+    );
   });
+
+  return (
+    <InfiniteScroll loadMore={loadItems} pageStart={0} hasMore={hasMoreItems}>
+      <MovieGrid>{movieComponents}</MovieGrid>
+    </InfiniteScroll>
+  );
 };
 
-export const fetchMovie = (id) => dispatch => {
-  axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=a50dd974dc6bceb5358b37229983facc&include_adult=false&include_video=false`
-  ).then(function (response) {
-    dispatch({ type: FETCH_MOVIE, payload: response.data });
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-};
+export default MovieList;
+
+const MovieGrid = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 2em;
+  margin: 0 auto;
+`;
